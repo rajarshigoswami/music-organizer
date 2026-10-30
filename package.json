@@ -1,0 +1,27 @@
+{
+  "name": "music-organizer",
+  "version": "1.0.0",
+  "description": "Cross-platform GUI application to organize music library and generate playlists for HiBy R1 / Sonix OS and standard players",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "electron": "electron .",
+    "web": "node server.js"
+  },
+  "keywords": [
+    "sonix",
+    "hiby-r1",
+    "music-organizer",
+    "playlist-generator",
+    "electron",
+    "cross-platform"
+  ],
+  "author": "Antigravity & Sonix Player Team",
+  "license": "MIT",
+  "dependencies": {
+    "music-metadata": "^11.6.0"
+  },
+  "devDependencies": {
+    "electron": "^45.1.0"
+  }
+}

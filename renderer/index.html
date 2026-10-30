@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonix Media & Playlist Organizer</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">Sonix Media Organizer</h1>
+        <p class="brand-subtitle">HiBy R1 & Cross-Platform Music & Playlist Suite</p>
+      </div>
+    </div>
+    <div class="header-badges">
+      <span class="badge" id="platformBadge">
+        <span class="badge-dot"></span>
+        <span id="platformText">Desktop Mode</span>
+      </span>
+      <span class="badge" id="versionBadge">v1.0.0</span>
+    </div>
+  </header>
+
+  <!-- Step Navigation Tabs -->
+  <nav class="tab-navigation">
+    <div class="tabs-container">
+      <button class="tab-btn active" id="tabBtn1" onclick="switchTab(1)">
+        <span class="tab-num">1</span>
+        <span>Configure</span>
+      </button>
+      <button class="tab-btn" id="tabBtn2" onclick="switchTab(2)">
+        <span class="tab-num">2</span>
+        <span>Preview &amp; Review</span>
+      </button>
+      <button class="tab-btn" id="tabBtn3" onclick="switchTab(3)">
+        <span class="tab-num">3</span>
+        <span>Organize &amp; Finish</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- TAB 1: CONFIGURE -->
+    <section class="tab-pane active" id="pane1">
+      <!-- Folder Paths Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Directory Selection
+            </h2>
+            <p class="card-description">Select your incoming music directory and the destination library folder.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sourceDir">Source Folder (Containing raw or subfolder songs)</label>
+          <div class="input-browse-group">
+            <input type="text" id="sourceDir" class="input-text" placeholder="e.g. E:\music or /Volumes/SD/Incoming" />
+            <button class="btn btn-secondary" id="browseSourceBtn" onclick="browseFolder('sourceDir')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Browse...
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="destDir">Destination Folder (Target organized library)</label>
+          <div class="input-browse-group">
+            <input type="text" id="destDir" class="input-text" placeholder="e.g. E:\Music or /Volumes/SD/Music" />
+            <button class="btn btn-secondary" id="browseDestBtn" onclick="browseFolder('destDir')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Browse...
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="playlistDir">Playlist Destination Folder (Optional - defaults to Destination/Playlist)</label>
+          <div class="input-browse-group">
+            <input type="text" id="playlistDir" class="input-text" placeholder="Auto: <Destination>/Playlist or SD root /Playlist" />
+            <button class="btn btn-secondary" id="browsePlaylistBtn" onclick="browseFolder('playlistDir')">
+              Browse...
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organization Hierarchy Mode -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+                <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+              </svg>
+              Library Structure Layout
+            </h2>
+            <p class="card-description">Choose how destination audio files are categorized and structured on disk.</p>
+          </div>
+        </div>
+
+        <div class="options-grid">
+          <div class="option-card selected" id="optSonix" onclick="selectLayout('sonix')">
+            <div class="option-card-header">
+              <span class="option-title">Sonix OS / HiBy R1 Optimized</span>
+              <span class="option-badge">RECOMMENDED</span>
+            </div>
+            <p class="option-desc">
+              Organizes into <code>Artists/</code> (albums), <code>Soundtracks/</code> (multi-artist film OSTs), and <code>Singles/</code>. Strips screen clutter for 480px displays and caps folders under 64 files.
+            </p>
+          </div>
+
+          <div class="option-card" id="optStandard" onclick="selectLayout('standard')">
+            <div class="option-card-header">
+              <span class="option-title">Standard Artist Layout</span>
+            </div>
+            <p class="option-desc">
+              Direct traditional <code>&lt;Artist&gt;/&lt;Album&gt;/&lt;Track&gt; - &lt;Title&gt;</code> hierarchy. Ideal for general desktop music managers and other standard DAPs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlist & Operation Options -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              Playlist Generation &amp; File Operation
+            </h2>
+            <p class="card-description">Control playlist creation rules and file handling safety.</p>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="chkSubfolderPlaylists" class="custom-checkbox" checked />
+          <div class="checkbox-label-group">
+            <label class="checkbox-title" for="chkSubfolderPlaylists">Generate Playlists by Source Subfolder</label>
+            <p class="checkbox-subtext">If source has subfolders (e.g. <code>Sono Lem/</code>, <code>hindi/</code>), creates <code>Sono Lem.m3u</code> and <code>Hindi.m3u</code> containing all songs from that folder linking to their new destination locations.</p>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="chkArtistPlaylists" class="custom-checkbox" />
+          <div class="checkbox-label-group">
+            <label class="checkbox-title" for="chkArtistPlaylists">Generate Playlists by Artist Name</label>
+            <p class="checkbox-subtext">Creates <code>&lt;Artist&gt;.m3u</code> playlists for primary artists not already covered by subfolders.</p>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="chkSonixFormat" class="custom-checkbox" checked />
+          <div class="checkbox-label-group">
+            <label class="checkbox-title" for="chkSonixFormat">Sonix OS Playlist Format (#[Sonix Playlist] header)</label>
+            <p class="checkbox-subtext">Includes <code>#[Sonix Playlist]</code> auto-import marker, relative Linux forward-slash paths, and UTF-8 encoding (no BOM).</p>
+          </div>
+        </div>
+
+        <div class="checkbox-row" style="margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+          <div class="checkbox-label-group">
+            <label class="checkbox-title">File Operation</label>
+            <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+              <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.85rem;">
+                <input type="radio" name="operationMode" value="copy" checked class="custom-checkbox" />
+                <span>Copy (Safe - leaves source untouched)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.85rem;">
+                <input type="radio" name="operationMode" value="move" class="custom-checkbox" />
+                <span>Move (Transfers files to destination)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button class="btn btn-primary btn-lg" id="scanBtn" onclick="startScan()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Scan &amp; Preview Library
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 2: PREVIEW & REVIEW -->
+    <section class="tab-pane" id="pane2">
+      <!-- Metric Highlights -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-value" id="statFiles">0</div>
+          <div class="metric-label">Audio Tracks</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="statArtists">0</div>
+          <div class="metric-label">Artists Identified</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="statSubfolders">0</div>
+          <div class="metric-label">Source Subfolders</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="statPlaylists">0</div>
+          <div class="metric-label">Playlists Planned</div>
+        </div>
+      </div>
+
+      <!-- Planned Playlists Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+              </svg>
+              Planned Playlists
+            </h2>
+            <p class="card-description">Playlists generated from source folders and artists. Each track resolves to its new destination path.</p>
+          </div>
+        </div>
+        <div class="playlist-chips" id="playlistChipsContainer">
+          <!-- Dynamically populated chips -->
+        </div>
+      </div>
+
+      <!-- Detailed Mapping Table -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Track Reorganization Mapping</h2>
+            <p class="card-description">Preview of each track's planned destination path before copying.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="text" id="tableFilterInput" class="input-text" placeholder="Filter by title, artist, or folder..." style="padding: 0.45rem 0.8rem; font-size: 0.8rem; width: 240px;" oninput="filterPreviewTable()" />
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>Source Subfolder</th>
+                <th>Track Title</th>
+                <th>Artist</th>
+                <th>Category</th>
+                <th>New Destination Path</th>
+              </tr>
+            </thead>
+            <tbody id="previewTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Step 2 Actions -->
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-secondary" onclick="switchTab(1)">
+          &larr; Back to Settings
+        </button>
+        <button class="btn btn-success btn-lg" id="executeBtn" onclick="startExecution()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Execute Organization &amp; Create Playlists
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 3: EXECUTION & PROGRESS -->
+    <section class="tab-pane" id="pane3">
+      <!-- Progress Bar Card -->
+      <div class="card progress-card">
+        <h2 class="progress-status-text" id="progressStatusText">Preparing organization...</h2>
+        <p class="progress-subtext" id="progressSubtext">Initializing file operations...</p>
+
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); max-width: 650px; margin: 0 auto;">
+          <span id="progressCount">0 / 0 tracks</span>
+          <span id="progressPercent" style="font-weight: 700; color: #fff;">0%</span>
+        </div>
+      </div>
+
+      <!-- Live Execution Log Terminal -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+            Activity &amp; Transfer Console
+          </h2>
+        </div>
+        <div class="terminal-window" id="terminalLog">
+          <!-- Live logs -->
+        </div>
+      </div>
+
+      <!-- Completion Banner -->
+      <div class="completion-banner" id="completionBanner">
+        <div class="completion-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;">Library Organized Successfully!</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem;" id="completionSummaryText">
+          All audio files have been organized and playlists are ready for your HiBy R1 / Sonix OS player.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+          <button class="btn btn-primary" onclick="openTargetFolder()">
+            Open Organized Music Folder
+          </button>
+          <button class="btn btn-secondary" onclick="openPlaylistFolder()">
+            Open Playlists Folder
+          </button>
+          <button class="btn btn-secondary" onclick="switchTab(1)">
+            Start Another Batch
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
